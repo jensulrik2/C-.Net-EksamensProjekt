@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AdministrationApp.MainPage">
+
+    <VerticalStackLayout Padding="10" VerticalOptions="Center" HorizontalOptions="Center">
+        <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+            <!-- Medarbejdere Section -->
+            <VerticalStackLayout HorizontalOptions="Center">
+                <Label Text="Medarbejdere" FontSize="24" HorizontalOptions="Center" />
+                <Frame BorderColor="Blue" CornerRadius="5" Padding="0">
+                    <ListView x:Name="MedarbejderListView" ItemSelected="OnMedarbejderSelected" VerticalOptions="Center">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <VerticalStackLayout Padding="10" HorizontalOptions="Center">
+                                        <Label Text="{Binding Navn}" FontSize="18" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                                        <Label Text="{Binding Initialer}" FontSize="14" TextColor="Gray" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                                        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                                            <Label Text="Total Hours:" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                                            <Label Text="{Binding TotalHours}" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Frame>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Text="Add Medarbejder" Clicked="OnAddMedarbejderClicked" Grid.Column="0" HorizontalOptions="Center" />
+                    <Button Text="Delete Medarbejder" Clicked="OnDeleteMedarbejderClicked" Grid.Column="1" HorizontalOptions="Center" />
+                </Grid>
+                <Label Text="Show current week" HorizontalOptions="Center" />
+                <Switch x:Name="ToggleWeek" IsToggled="True" Toggled="OnToggleWeekToggled" HorizontalOptions="Center" />
+                <Label Text="Show current month" HorizontalOptions="Center" />
+                <Switch x:Name="ToggleMonth" Toggled="OnToggleMonthToggled" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Afdelinger Section -->
+            <VerticalStackLayout HorizontalOptions="Center">
+                <Label Text="Afdelinger" FontSize="24" HorizontalOptions="Center" />
+                <Frame BorderColor="Blue" CornerRadius="5" Padding="0">
+                    <ListView x:Name="AfdelingListView" ItemSelected="OnAfdelingSelected" VerticalOptions="Center">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <VerticalStackLayout HorizontalOptions="Center">
+                                        <Label Text="{Binding Navn}" FontSize="18" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                                    </VerticalStackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Frame>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Text="Add Afdeling" Clicked="OnAddAfdelingClicked" Grid.Column="0" HorizontalOptions="Center" />
+                    <Button Text="Delete Afdeling" Clicked="OnDeleteAfdelingClicked" Grid.Column="1" HorizontalOptions="Center" />
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- Sager Section -->
+            <VerticalStackLayout HorizontalOptions="Center">
+                <Label Text="Sager" FontSize="24" HorizontalOptions="Center" />
+                <Frame BorderColor="Blue" CornerRadius="5" Padding="0">
+                    <ListView x:Name="SagListView" VerticalOptions="Center">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <VerticalStackLayout HorizontalOptions="Center">
+                                        <Label Text="{Binding Overskrift}" FontSize="18" HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                                    </VerticalStackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Frame>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Text="Add Sag" Clicked="OnAddSagClicked" Grid.Column="0" HorizontalOptions="Center" />
+                    <Button Text="Delete Sag" Clicked="OnDeleteSagClicked" Grid.Column="1" HorizontalOptions="Center" />
+                </Grid>
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+
+</ContentPage>

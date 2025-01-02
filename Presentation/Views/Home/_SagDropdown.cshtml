@@ -1,0 +1,7 @@
+@model IEnumerable<DTO.Model.SagsInfo>
+
+@foreach (var sag in Model)
+{
+    <option value="@sag.SagsId">@sag.SagsId @sag.Overskrift</option>
+}
+

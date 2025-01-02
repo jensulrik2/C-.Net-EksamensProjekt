@@ -1,0 +1,7 @@
+@model IEnumerable<DTO.Model.Medarbejder>
+
+@foreach (var medarbejder in Model)
+{
+    <option value="@medarbejder.MedarbejderId">@medarbejder.Navn (@medarbejder.Initialer)</option>
+}
+

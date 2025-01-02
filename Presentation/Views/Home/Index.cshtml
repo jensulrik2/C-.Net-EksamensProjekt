@@ -1,0 +1,117 @@
+﻿@model DTO.Model.TidsregistreringsInfo
+@{
+    ViewData["Title"] = "Registrer Tid";
+    var afdelinger = ViewBag.Afdelinger as List<DTO.Model.AfdelingsInfo>;
+    var message = ViewBag.Message as string;
+}
+
+<h2>Registrer Tid</h2>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="alert alert-info">
+        @message
+    </div>
+}
+
+<form id="tidsregistreringForm">
+    <div>
+        @Html.Label("afdelingDropdown", "Vælg Afdeling")
+        @Html.DropDownList("afdelingDropdown", new SelectList(afdelinger, "AfdelingNr", "Navn"), "-- Vælg Afdeling --", new { @class = "form-control", id = "afdelingDropdown" })
+    </div>
+
+    <div>
+        @Html.Label("medarbejderDropdown", "Vælg Medarbejder")
+        @Html.DropDownList("medarbejderId", new List<SelectListItem> { new SelectListItem { Text = "-- Vælg Medarbejder --", Value = "" } }, new { @class = "form-control", id = "medarbejderDropdown" })
+    </div>
+
+    <div>
+        @Html.Label("sagDropdown", "Vælg Sag")
+        @Html.DropDownList("sagsNr", new List<SelectListItem> { new SelectListItem { Text = "-- Vælg Sag --", Value = "" } }, new { @class = "form-control", id = "sagDropdown" })
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.Start, "Tidsregistrering Start")
+        @Html.TextBoxFor(model => model.Start, new { @type = "datetime-local", @class = "form-control", name = "start" })
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.Slut, "Tidsregistrering Slut")
+        @Html.TextBoxFor(model => model.Slut, new { @type = "datetime-local", @class = "form-control", name = "slut" })
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Opret Tidsregistrering</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const afdelingDropdown = document.getElementById("afdelingDropdown");
+            const medarbejderDropdown = document.getElementById("medarbejderDropdown");
+            const sagDropdown = document.getElementById("sagDropdown");
+
+            afdelingDropdown.addEventListener("change", function () {
+                const afdelingNr = this.value;
+
+                if (afdelingNr) {
+                    // Fetch and populate Medarbejder dropdown
+                    fetch(`/Home/GetMedarbejdere?afdelingNr=${afdelingNr}`)
+                        .then(response => response.text())
+                        .then(data => {
+                            medarbejderDropdown.innerHTML = data;
+                        })
+                        .catch(error => console.error('Error fetching medarbejdere:', error));
+
+                    // Fetch and populate Sag dropdown
+                    fetch(`/Home/GetSager?afdelingNr=${afdelingNr}`)
+                        .then(response => response.text())
+                        .then(data => {
+                            sagDropdown.innerHTML = data;
+                        })
+                        .catch(error => console.error('Error fetching sager:', error));
+                } else {
+                    medarbejderDropdown.innerHTML = '<option value="">-- Vælg Medarbejder --</option>';
+                    sagDropdown.innerHTML = '<option value="">-- Vælg Sag --</option>';
+                }
+            });
+
+            document.getElementById('tidsregistreringForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                var formData = new FormData(this);
+                var start = formData.get('start');
+                var slut = formData.get('slut');
+
+                if (!start || !slut) {
+                    alert('Please provide both start and end times.');
+                    return;
+                }
+
+                var data = {
+                    medarbejderId: formData.get('medarbejderId'),
+                    sagsId: formData.get('sagsId'),
+                    start: new Date(start).toISOString(),
+                    slut: new Date(slut).toISOString()
+                };
+
+                fetch('/Home/RegisterTime', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        alert(result.message);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while creating tidsregistrering.');
+                    });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+  <PropertyGroup>
+	  <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+	  <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <ProjectGuid>{BC170396-87F2-4BA9-9AC4-7BD8C54DBCDD}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Context\Context.cs" />
+    <Compile Include="Mappers\AfdelingMapper.cs" />
+    <Compile Include="Mappers\MedarbejderMapper.cs" />
+    <Compile Include="Mappers\SagMapper.cs" />
+    <Compile Include="Mappers\TidsregistreringMapper.cs" />
+    <Compile Include="Model\Afdeling.cs" />
+    <Compile Include="Model\Medarbejder.cs" />
+    <Compile Include="Model\Sag.cs" />
+    <Compile Include="Model\Tidsregistrering.cs" />
+    <Compile Include="Repositories\AfdelingRepository.cs" />
+    <Compile Include="Repositories\MedarbejderRepository.cs" />
+    <Compile Include="Repositories\SagRepository.cs" />
+    <Compile Include="Repositories\TidsregistreringRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore">
+      <Version>9.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer">
+      <Version>9.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DTO\DTO.csproj" />
+  </ItemGroup>
+</Project>
